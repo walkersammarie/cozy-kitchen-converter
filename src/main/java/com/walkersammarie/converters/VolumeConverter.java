@@ -7,12 +7,8 @@ import java.math.BigDecimal;
 
 public class VolumeConverter {
 
-    public Fraction teaspoonToTablespoon(Fraction input) {
-        BigDecimal three = new BigDecimal(3);
-        BigDecimal teaspoon = new BigDecimal(input.getNumerator() / input.getDenominator());
-        BigDecimal tablespoon = new BigDecimal(String.valueOf(teaspoon.divide(three)));
-
-        Fraction result = new Fraction(0, 1, 1);
+    public Number teaspoonToTablespoon(Number input) {
+        Number result = 0;
         return result;
     }
 
