@@ -9,4 +9,16 @@ public class InputConverter {
         return f;
     }
 
+    public String doubleToFractionString(Fraction f) {
+        String result;
+        if (f.getNumerator() > f.getDenominator()) {
+            int wholeNumber = (int)(f.getNumerator() / f.getDenominator());
+            int numerator = f.getNumerator() % f.getDenominator();
+            result = wholeNumber + " " + numerator + " / " + f.getDenominator();
+        } else {
+            result = f.toString();
+        }
+        return result;
+    }
+
 }
