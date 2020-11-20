@@ -4,7 +4,7 @@ import org.apache.commons.math3.fraction.Fraction;
 
 public class Tablespoon extends Measurement {
 
-    private static final String NAME = "tablespoon(s)";
+    private String name = "tablespoon";
     private Fraction value;
 
     public Tablespoon() {}
@@ -13,8 +13,8 @@ public class Tablespoon extends Measurement {
         this.value = value;
     }
 
-    public static String getName() {
-        return NAME;
+    public String getName() {
+        return name;
     }
 
     public Fraction getValue() {

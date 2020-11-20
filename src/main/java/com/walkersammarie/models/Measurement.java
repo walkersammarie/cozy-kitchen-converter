@@ -4,7 +4,7 @@ import org.apache.commons.math3.fraction.Fraction;
 
 public class Measurement {
 
-    private static final String NAME = "measurement";
+    private String name = "measurement";
     private Fraction value;
 
     public Measurement() {}
@@ -13,8 +13,8 @@ public class Measurement {
         this.value = value;
     }
 
-    public static String getName() {
-        return NAME;
+    public String getName() {
+        return name;
     }
 
     public Fraction getValue() {
