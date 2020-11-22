@@ -7,20 +7,36 @@ public class IOConverter {
 
     public Fraction stringToFraction(String input) {
         Fraction result;
+
+        int wholeNumber;
+        int num;
+        int denom;
+
         try {
-            String[] values = input.split(" ");
-            int wholeNumber = Integer.parseInt(values[0]);
-            int num = 0;
-            int denom = 0;
-            if (values.length > 1) {
-                String[] numAndDenom = values[1].split("/");
-                num = Integer.parseInt(numAndDenom[0]);
-                denom = Integer.parseInt(numAndDenom[1]);
-            }
-            if (num != 0 && denom != 0) {
-                result = new Fraction((wholeNumber * denom + num), denom);
+            String[] firstSplit = input.split(" ");
+            String[] secondSplit;
+            if (firstSplit.length == 1) {
+                secondSplit = firstSplit[0].split("/");
+                if (secondSplit.length == 1) {
+                    result = new Fraction(Integer.parseInt(secondSplit[0]));
+                } else if (secondSplit.length == 2) {
+                    num = Integer.parseInt(secondSplit[0]);
+                    denom = Integer.parseInt(secondSplit[1]);
+                    result = new Fraction(num, denom);
+                } else {
+                    result = null;
+                }
+            } else if (firstSplit.length == 2) {
+                secondSplit = firstSplit[0].split("/");
+                if (secondSplit.length == 2) {
+                    denom = Integer.parseInt(secondSplit[1]);
+                    num = Integer.parseInt(secondSplit[0]) + Integer.parseInt(firstSplit[0]) * denom;
+                    result = new Fraction(num, denom);
+                } else {
+                    result = null;
+                }
             } else {
-                result = new Fraction(wholeNumber);
+                result = null;
             }
             return result;
         } catch (IndexOutOfBoundsException | NumberFormatException e) {
@@ -31,15 +47,17 @@ public class IOConverter {
     private String fractionToString(Fraction f) {
         String result;
         if (f.getNumerator() > f.getDenominator()) {
-            int wholeNumber = (int)(f.getNumerator() / f.getDenominator());
+            int wholeNumber = f.getNumerator() / f.getDenominator();
             int numerator = f.getNumerator() % f.getDenominator();
             if (numerator == 0) {
                 result = wholeNumber + "";
             } else {
                 result = wholeNumber + " " + numerator + "/" + f.getDenominator();
             }
-
-        } else {
+        } else if (f.getNumerator() == f.getDenominator()) {
+            result = f.getNumerator() + "";
+        }
+        else {
             result = f.getNumerator() + "/" + f.getDenominator();
         }
         return result;

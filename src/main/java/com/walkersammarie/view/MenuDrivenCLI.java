@@ -15,7 +15,7 @@ public class MenuDrivenCLI implements BasicUI {
 
     @Override
     public void pauseOutput() {
-        System.out.println("(Press enter to continue)");
+        System.out.print("(Press enter to continue)");
         userInput.nextLine();
     }
 

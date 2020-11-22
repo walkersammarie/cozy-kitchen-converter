@@ -93,7 +93,7 @@ public class App {
                 Measurement originalMeasurement = makeMeasurementObject(selection);
                 Fraction originalFraction = null;
                 while (originalFraction == null) {
-                    String input = ui.promptForString("\nEnter a whole number (ex: 4) or a fraction (ex: 1 1/3): ");
+                    String input = ui.promptForString("\nEnter a whole number (ex: '4') or a fraction (ex: '3/4' or '1 1/3'): ");
                     originalFraction = ioConverter.stringToFraction(input);
                     if (originalFraction == null) {
                         ui.output("*** INVALID INPUT PLEASE TRY AGAIN ***");
