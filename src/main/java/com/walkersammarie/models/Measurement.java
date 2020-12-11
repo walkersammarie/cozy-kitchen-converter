@@ -13,6 +13,10 @@ public class Measurement {
         this.value = value;
     }
 
+    public Measurement(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }

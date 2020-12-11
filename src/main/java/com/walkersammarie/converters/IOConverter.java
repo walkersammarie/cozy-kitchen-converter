@@ -18,7 +18,9 @@ public class IOConverter {
             if (firstSplit.length == 1) {
                 secondSplit = firstSplit[0].split("/");
                 if (secondSplit.length == 1) {
-                    result = new Fraction(Integer.parseInt(secondSplit[0]));
+                    num = Integer.parseInt(secondSplit[0]);
+                    denom = 1;
+                    result = new Fraction(num, denom);
                 } else if (secondSplit.length == 2) {
                     num = Integer.parseInt(secondSplit[0]);
                     denom = Integer.parseInt(secondSplit[1]);

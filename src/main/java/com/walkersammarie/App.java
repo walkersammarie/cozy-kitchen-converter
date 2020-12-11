@@ -3,8 +3,6 @@ package com.walkersammarie;
 import com.walkersammarie.converters.Converter;
 import com.walkersammarie.converters.IOConverter;
 import com.walkersammarie.models.Measurement;
-import com.walkersammarie.models.Tablespoon;
-import com.walkersammarie.models.Teaspoon;
 import com.walkersammarie.view.BasicUI;
 import com.walkersammarie.view.MenuDrivenCLI;
 import org.apache.commons.math3.fraction.Fraction;
@@ -70,11 +68,11 @@ public class App {
         while (running) {
             String selection = ui.promptForSelection(MAIN_MENU_OPTIONS);
             if (selection.equals(VOLUME)) {
-                displayVolumeMenu();
+                displayMenu(VOLUME_MENU_OPTIONS);
             } else if (selection.equals(WEIGHT)) {
-                displayWeightMenu();
+                displayMenu(WEIGHT_MENU_OPTIONS);
             } else if (selection.equals(TEMP)) {
-                displayTempMenu();
+                displayMenu(TEMP_MENU_OPTIONS);
             } else if (selection.equals(EXIT)) {
                 ui.output("Thanks for using the Cozy Kitchen Converter. Come back soon!");
                 running = false;
@@ -82,11 +80,11 @@ public class App {
         }
     }
 
-    private void displayVolumeMenu() {
+    private void displayMenu(String[] menuChoices) {
         boolean running = true;
         while (running) {
             ui.output("Please choose the unit you already have and wish to convert.");
-            String selection = ui.promptForSelection(VOLUME_MENU_OPTIONS);
+            String selection = ui.promptForSelection(menuChoices);
             if (selection.equals(BACK_TO_MAIN_MENU)) {
                 running = false;
             } else {
@@ -100,19 +98,19 @@ public class App {
                     }
                 }
                 originalMeasurement.setValue(originalFraction);
-                displayVolumeSubMenu(selection, originalMeasurement);
+                displaySubMenu(selection, originalMeasurement, menuChoices);
                 running = false;
             }
         }
     }
 
-    private void displayVolumeSubMenu(String firstSelection, Measurement original) {
+    private void displaySubMenu(String firstSelection, Measurement original, String[] menuChoices) {
         boolean running = true;
         while (running) {
             ui.output("Please choose the unit you wish to convert to.");
-            String secondSelection = ui.promptForSelection(VOLUME_MENU_OPTIONS);
+            String secondSelection = ui.promptForSelection(menuChoices);
             if (secondSelection.equals(firstSelection)) {
-                ui.output("Please select a different measurement than the original.");
+                ui.output("Please select a different unit than the original.");
             } else if (secondSelection.equals(BACK_TO_MAIN_MENU)) {
                 running = false;
             } else {
@@ -125,63 +123,8 @@ public class App {
         }
     }
 
-    private void displayWeightMenu() {
-        boolean running = true;
-        while (running) {
-            ui.output("Please select the ");
-            String selection = ui.promptForSelection(WEIGHT_MENU_OPTIONS);
-            if (selection.equals(GRAM)) {
-
-            } else if (selection.equals(KILOGRAM)) {
-
-            } else if (selection.equals(OUNCE)) {
-
-            } else if (selection.equals(POUND)) {
-
-            } else if (selection.equals(BACK_TO_MAIN_MENU)) {
-                running = false;
-            }
-        }
-    }
-
-    private void displayTempMenu() {
-        boolean running = true;
-        while (running) {
-            String selection = ui.promptForSelection(TEMP_MENU_OPTIONS);
-            if (selection.equals(CELSIUS)) {
-
-            } else if (selection.equals(FAHRENHEIT)) {
-
-            } else if (selection.equals(BACK_TO_MAIN_MENU)) {
-                running = false;
-            }
-        }
-    }
-
     private Measurement makeMeasurementObject(String selection) {
-        Measurement result;
-        if (selection.equals(TEASPOON)) {
-            result = new Teaspoon();
-        } else if (selection.equals(TABLESPOON)) {
-            result = new Tablespoon();
-        } else {
-            result = null;
-        }
-        //else if (selection.equals(CUP)) {
-//
-//        } else if (selection.equals(PINT)) {
-//
-//        } else if (selection.equals(QUART)) {
-//
-//        } else if (selection.equals(GALLON)) {
-//
-//        } else if (selection.equals(FLUID_OUNCE)) {
-//
-//        } else if (selection.equals(ML)) {
-//
-//        } else if (selection.equals(LITER)) {
-//
-//        }
+        Measurement result = new Measurement(selection.toLowerCase());
         return result;
     }
 
