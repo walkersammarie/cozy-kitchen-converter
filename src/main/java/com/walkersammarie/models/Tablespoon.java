@@ -17,12 +17,12 @@ public class Tablespoon extends Measurement {
         return name;
     }
 
-    public Fraction getValue() {
+    public Fraction getFractionValue() {
         return value;
     }
 
-    public void setValue(Fraction value) {
-        this.value = value;
+    public void setFractionValue(Fraction fractionValue) {
+        this.value = fractionValue;
     }
 
 }

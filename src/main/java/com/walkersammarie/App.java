@@ -87,8 +87,21 @@ public class App {
             String selection = ui.promptForSelection(menuChoices);
             if (selection.equals(BACK_TO_MAIN_MENU)) {
                 running = false;
+            } else if (selection.equals(FAHRENHEIT) || selection.equals(CELSIUS)) {
+                Measurement originalMeasurement = new Measurement(selection.toLowerCase());
+                Integer originalInput = null;
+                while (originalInput == null) {
+                    Integer input = ui.promptForInt("\nEnter a whole number (ex: 150): ");
+                    originalInput = input;
+                    if (originalInput == null) {
+                        ui.output("*** INVALID INPUT PLEASE TRY AGAIN ***");
+                    }
+                }
+                originalMeasurement.setIntValue(originalInput);
+                displaySubMenu(selection, originalMeasurement, menuChoices);
+                running = false;
             } else {
-                Measurement originalMeasurement = makeMeasurementObject(selection);
+                Measurement originalMeasurement = new Measurement(selection.toLowerCase());
                 Fraction originalFraction = null;
                 while (originalFraction == null) {
                     String input = ui.promptForString("\nEnter a whole number (ex: '4') or a fraction (ex: '3/4' or '1 1/3'): ");
@@ -97,7 +110,7 @@ public class App {
                         ui.output("*** INVALID INPUT PLEASE TRY AGAIN ***");
                     }
                 }
-                originalMeasurement.setValue(originalFraction);
+                originalMeasurement.setFractionValue(originalFraction);
                 displaySubMenu(selection, originalMeasurement, menuChoices);
                 running = false;
             }
@@ -114,18 +127,13 @@ public class App {
             } else if (secondSelection.equals(BACK_TO_MAIN_MENU)) {
                 running = false;
             } else {
-                Measurement toConvert = makeMeasurementObject(secondSelection);
+                Measurement toConvert = new Measurement(secondSelection.toLowerCase());
                 Measurement converted = converter.convert(original, toConvert);
                 ui.output(ioConverter.generateResultSentence(original, converted));
                 ui.pauseOutput();
                 running = false;
             }
         }
-    }
-
-    private Measurement makeMeasurementObject(String selection) {
-        Measurement result = new Measurement(selection.toLowerCase());
-        return result;
     }
 
 }

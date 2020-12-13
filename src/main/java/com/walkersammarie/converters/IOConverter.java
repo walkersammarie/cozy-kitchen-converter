@@ -7,8 +7,6 @@ public class IOConverter {
 
     public Fraction stringToFraction(String input) {
         Fraction result;
-
-        int wholeNumber;
         int num;
         int denom;
 
@@ -66,8 +64,17 @@ public class IOConverter {
     }
 
     public String generateResultSentence(Measurement original, Measurement conversion) {
-        String result = fractionToString(original.getValue()) + " " + original.getName() + "(s) is equal to " +
-                fractionToString(conversion.getValue()) + " " + conversion.getName() + "(s).";
+        String result;
+        if (original.getName().equals("celsius") || original.getName().equals("fahrenheit")) {
+            result = original.getIntValue() + " degrees " + original.getName() + " is equal to " +
+                    conversion.getIntValue() + " degrees " + conversion.getName() + ".";
+        } else if (conversion.getIntValue() != null) {
+            result = fractionToString(original.getFractionValue()) + " " + original.getName() + "(s) is equal to " +
+                    conversion.getIntValue() + " " + conversion.getName() + "(s).";
+        } else {
+            result = fractionToString(original.getFractionValue()) + " " + original.getName() + "(s) is equal to " +
+                    fractionToString(conversion.getFractionValue()) + " " + conversion.getName() + "(s).";
+        }
         return result;
     }
 

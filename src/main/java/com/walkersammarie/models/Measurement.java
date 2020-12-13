@@ -5,13 +5,11 @@ import org.apache.commons.math3.fraction.Fraction;
 public class Measurement {
 
     private String name = "measurement";
-    private Fraction value;
+    private Fraction fractionValue;
+    private Integer intValue;
+    private Double doubleValue;
 
     public Measurement() {}
-
-    public Measurement(Fraction value) {
-        this.value = value;
-    }
 
     public Measurement(String name) {
         this.name = name;
@@ -21,12 +19,28 @@ public class Measurement {
         return name;
     }
 
-    public Fraction getValue() {
-        return value;
+    public Fraction getFractionValue() {
+        return fractionValue;
     }
 
-    public void setValue(Fraction value) {
-        this.value = value;
+    public void setFractionValue(Fraction fractionValue) {
+        this.fractionValue = fractionValue;
+    }
+
+    public Integer getIntValue() {
+        return intValue;
+    }
+
+    public void setIntValue(Integer intValue) {
+        this.intValue = intValue;
+    }
+
+    public Double getDoubleValue() {
+        return doubleValue;
+    }
+
+    public void setDoubleValue(Double doubleValue) {
+        this.doubleValue = doubleValue;
     }
 
 }

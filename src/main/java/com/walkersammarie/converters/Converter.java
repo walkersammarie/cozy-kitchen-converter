@@ -1,8 +1,6 @@
 package com.walkersammarie.converters;
 
 import com.walkersammarie.models.Measurement;
-import com.walkersammarie.models.Tablespoon;
-import com.walkersammarie.models.Teaspoon;
 import org.apache.commons.math3.fraction.Fraction;
 
 import java.util.HashMap;
@@ -20,17 +18,30 @@ public class Converter {
 
     /* Method to convert the original input value into the chosen conversion */
     public Measurement convert(Measurement original, Measurement conversion) {
+        if (original.getName().equals("celsius")) {
+            double doubleResult = (original.getIntValue() * (9/5.0)) + 32;
+            int result = (int)doubleResult;
+            conversion.setIntValue(result);
+        } else if (original.getName().equals("fahrenheit")) {
+            double doubleResult = (original.getIntValue() - 32) * (5.0/9);
+            int result = (int)doubleResult;
+            conversion.setIntValue(result);
+        } else {
             // get column and row numbers based on measurement names
             // check table for converter value
-        int rowValue = columnRowValues.get(original.getName());
-        int columnValue = columnRowValues.get(conversion.getName());
-        Double conversionValue = conversionValues[rowValue][columnValue];
+            int rowValue = columnRowValues.get(original.getName());
+            int columnValue = columnRowValues.get(conversion.getName());
+            Double conversionValue = conversionValues[rowValue][columnValue];
             // multiply original value by conversionValue
-            // make a new Fraction with the result value
             // set the value to the conversion object and return it
-        double result = original.getValue().doubleValue() * conversionValue;
-        Fraction newFraction = new Fraction(result, 8);
-        conversion.setValue(newFraction);
+            double result = original.getFractionValue().doubleValue() * conversionValue;
+            if (result == (int)result) {
+                conversion.setIntValue((int)result);
+            } else {
+                Fraction newFraction = new Fraction(result, 8);
+                conversion.setFractionValue(newFraction);
+            }
+        }
         return conversion;
     }
 
@@ -49,13 +60,12 @@ public class Converter {
         columnRowValues.put("kilogram", 10);
         columnRowValues.put("ounce", 11);
         columnRowValues.put("pound", 12);
-        columnRowValues.put("celsius", 13);
-        columnRowValues.put("fahrenheit", 14);
+//        columnRowValues.put("celsius", 13);
+//        columnRowValues.put("fahrenheit", 14);
     }
 
     private void setupTable() {
         conversionValues = new Double[][]{
-//                {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
                 // teaspoon
                 {0.0, 0.333334, 0.020834, 0.01041667, 0.00520833, 0.00130208, 0.166667, 4.92899408, 0.00492611, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
                 // tablespoon
@@ -77,15 +87,15 @@ public class Converter {
                 // gram
                 {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.035274, 0.00220462, 0.0, 0.0},
                 // kilogram
-                {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, .0, 0.0, 0.0, 0.0, 0.0, 0.0},
+                {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1000.0, 0.0, 35.274, 02.20462, 0.0, 0.0},
                 // ounce
-                {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
+                {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 28.3495, 0.0283495, 0.0, 0.0625, 0.0, 0.0},
                 // pound
-                {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
+                {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 453.592, 0.453592, 16.0, 0.0, 0.0, 0.0}
                 // celsius
-                {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
+//                {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
                 // fahrenheit
-                {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+//                {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
         };
     }
 
